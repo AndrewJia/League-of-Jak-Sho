@@ -1,7 +1,3 @@
-//const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-//const fetch = require('node-fetch');
-//import fetch from 'node-fetch';
-
 const api_key = 'RGAPI-0982a1ae-4980-4d33-84b3-4ed945bbf8fd';
 
 const testSummonerName = 'moustachetacohat';
@@ -9,9 +5,12 @@ const testPUUID = 'Rvs-ajlKaiugM3CT4Rw39Jm6THVZqgJjRZAOeI-L0PgxqzguB_LOsXZC0H9oJ
 
 const startTime = 1669136400;
 
+const jakshoID = 6665;
+
 //getPUUID(testSummonerName);
 //getMatchBatch(testPUUID, 0, 'ranked');
-analyzeMatch('NA1_4499608106');
+//analyzeMatch('NA1_4499608106');          //game with no jaksho
+//analyzeMatch('NA1_4513324909');          //game with one jaksho on losing team
 
 
 // input summoner name
@@ -30,8 +29,7 @@ async function getPUUID(summonerName) {
 async function getMatchBatch(PUUID, startInd, type) {
 	let response = await fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${PUUID}/ids?startTime=${startTime}&type=${type}&start=${startInd}&count=100&api_key=${api_key}`);
 	let matchBatch = await response.json();
-	debugLog(matchBatch);
-	
+	//debugLog(matchBatch);
 	return matchBatch;
 }
 
@@ -41,7 +39,21 @@ async function getMatchBatch(PUUID, startInd, type) {
 async function analyzeMatch(matchId) {
 	let response = await fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${api_key}`);
 	let matchInfo = await response.json();
-	debugLog(matchInfo['info']['participants']);
+
+	let output = [0, 0];
+	for(let i = 0; i < 10; i++) {
+		for(let j = 0; j < 6; j++) {
+			if(matchInfo['info']['participants'][i][`item${j}`] == jakshoID) {
+				if(matchInfo['info']['participants'][i]['win']) {
+					output[0]++;
+				} else {
+					output[1]++;
+				}
+			}
+		}
+	}
+	debugLog(`${matchId} ${output}`);
+	return output;
 }
 
 // submit button event listener
