@@ -1,17 +1,8 @@
-const api_key = 'RGAPI-0982a1ae-4980-4d33-84b3-4ed945bbf8fd';
-
-const testSummonerName = 'moustachetacohat';
-const testPUUID = 'Rvs-ajlKaiugM3CT4Rw39Jm6THVZqgJjRZAOeI-L0PgxqzguB_LOsXZC0H9oJeuE5NWYJ5auIu7Xsg';
+const api_key = 'INSERT API KEY HERE';
 
 const startTime = 1669136400; //approx release time of patch 12.22 in NA
 const jakshoID = 6665;
 const unspokenID = 7026;
-
-//getPUUID(testSummonerName);
-//getMatchBatch(testPUUID, 0, 'ranked');
-//analyzeMatch('NA1_4499608106');          //game with no jaksho
-//analyzeMatch('NA1_4513324909');          //game with one jaksho on losing team
-//getAllMatches(testPUUID, 'ranked');
 
 // input summoner name
 // output PUUID from riot
